@@ -9,8 +9,8 @@ const LEVEL = {
 
 // объект с цветами
 const COLORS = {
-    mistake: 'radial-gradient(circle, rgba(253,29,29,1) 0%, rgba(252,136,69,1) 100%)',
-    correct: 'radial-gradient(circle, rgba(59,138,240,1) 0%, rgba(0,212,255,1) 100%)',
+    mistake: 'radial-gradient(circle, rgba(252,136,69,1) 0%, rgba(253,29,29,1) 100%)',
+    correct: 'radial-gradient(circle, rgba(0,212,255,1) 0%, rgba(59,138,240,1) 100%)',
     default: 'linear-gradient(#d1d1d1, rgb(156, 156, 156))'
 };
 
