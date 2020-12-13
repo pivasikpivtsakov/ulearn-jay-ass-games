@@ -9,8 +9,9 @@ const LEVEL = {
 
 // объект с цветами
 const COLORS = {
-    red: 'red',
-    blue: 'blue'
+    mistake: 'radial-gradient(circle, rgba(253,29,29,1) 0%, rgba(252,136,69,1) 100%)',
+    correct: 'radial-gradient(circle, rgba(59,138,240,1) 0%, rgba(0,212,255,1) 100%)',
+    default: 'linear-gradient(#d1d1d1, rgb(156, 156, 156))'
 };
 
 // возвращает случайное число от 0 до max
@@ -25,19 +26,32 @@ const generateSequence = (level) => {
     return sequence;
 };
 
+// подсвечиваем элемент
+const lightUp = (item, color) => {
+    item.style.background = color
+}
+
+// подсвечиваем все элементы
+const lightUpAll = (items, color) => {
+    for (const item of items) {
+        lightUp(item, color)
+    }
+}
+
 // мигаем элементом
-const blink = (item, color) => {
-    let previousBackground = item.style.background
-    item.style.background = color;
+const blink = (item, color, prevColor, onend) => {
+    let previousBackground = prevColor === undefined ? item.style.background : prevColor
+    lightUp(item, color)
     setTimeout(() => {
-        item.style.background = previousBackground;
+        lightUp(item, previousBackground);
+        onend()
     }, 200);
 };
 
 // мигаем всеми элементом
-const blinkAll = (items, color) => {
+const blinkAll = (items, color, prevColor) => {
     for (const item of items) {
-        blink(item, color)
+        blink(item, color, prevColor)
     }
 };
 
@@ -118,15 +132,15 @@ let start = (level) => {
             console.log(currentNumber)
 
             if (i == currentNumber) {
-                blink(items[i], COLORS.blue);
+                lightUp(items[i], COLORS.correct)
                 currentNumber = sequence[++currentIndex];
                 if (currentIndex == sequence.length) {
                     isWin = true;
-                    blinkAll(items, COLORS.blue);
+                    blinkAll(items, COLORS.correct, COLORS.default);
                     setTimeout(() => alert('победа'), 500);
                 }
             } else {
-                blink(items[i], COLORS.red);
+                blink(items[i], COLORS.mistake, COLORS.default, () => { lightUpAll(items, COLORS.default) });
                 currentIndex = 0;
                 currentNumber = sequence[0];
             }
@@ -134,4 +148,27 @@ let start = (level) => {
     }
 }
 
-start(LEVEL.hard);
+// очищение поля
+const clearField = () => {
+    let aboveCanvas = document.querySelector('.above-canvas')
+    while (aboveCanvas.firstChild) {
+        aboveCanvas.removeChild(aboveCanvas.lastChild)
+    }
+}
+
+document.querySelector('#easy-game-btn').onclick = (e) => {
+    clearField()
+    start(LEVEL.easy)
+}
+
+document.querySelector('#medium-game-btn').onclick = (e) => {
+    clearField()
+    start(LEVEL.medium)
+}
+
+document.querySelector('#hard-game-btn').onclick = (e) => {
+    clearField()
+    start(LEVEL.hard)
+}
+
+start(LEVEL.easy);
