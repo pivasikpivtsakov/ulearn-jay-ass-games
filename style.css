@@ -20,6 +20,11 @@
     transition: transform 0.5s
 }
 
+.hide {
+    transform: rotateY(0deg);
+    transition: transform 0.5s
+}
+
 
 /* .item:hover {
   transform: rotateY(180deg);
