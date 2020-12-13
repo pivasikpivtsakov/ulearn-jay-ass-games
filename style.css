@@ -25,11 +25,35 @@
     transition: transform 0.5s
 }
 
+.std-buttons {
+    display: flex;
+    margin-top: 16px;
+}
 
-/* .item:hover {
-  transform: rotateY(180deg);
-  transition: transform 0.5s 
-} */
+.game-btn {
+    margin-left: 8px;
+    margin-right: 8px;
+    border-radius: 10px;
+    height: 50px;
+    border: none;
+}
+
+#easy-game-btn {
+    background: rgb(136, 252, 42);
+}
+
+#medium-game-btn {
+    background: rgb(208, 211, 11);
+}
+
+#hard-game-btn {
+    background: rgb(255, 0, 0);
+}
+
+.action-btn {
+    background: rgba(0, 0, 0, 255);
+    color: white;
+}
 
 .item_show {
     text-align: center;

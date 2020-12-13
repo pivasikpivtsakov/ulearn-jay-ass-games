@@ -50,7 +50,7 @@ class Picture {
 }
 
 // массив ссылок на картинки
-const pictureLinks = [
+let pictureLinks = [
     'res\\200089200354_372636.jpg',
     'res\\200102200272_283372.jpg',
     'res\\200108900338_291997.jpg',
@@ -135,26 +135,29 @@ let createField = (picturesArr, size) => {
     return pictures;
 }
 
-let start = (size) => {
-    let images = mixImgs(pictureLinks, size)
+let currentSize = undefined
+
+function start(size) {
+    currentSize = size
+    let images = mixImgs(pictureLinks, size);
     let pictures = createField(images, size);
-    let pairedCount = 0
-    let winCount = size.width * size.height
-        /**
-         * @type Picture
-         */
-    let pairPic = null
-    let clicksMade = 0
-    let clicksMadeP = document.querySelector('#clicks-made-p')
+    let pairedCount = 0;
+    let winCount = size.width * size.height;
+    /**
+     * @type Picture
+     */
+    let pairPic = null;
+    let clicksMade = 0;
+    let clicksMadeP = document.querySelector('#clicks-made-p');
 
     for (let i = 0; i < pictures.length; i++) {
-        let pic = pictures[i]
+        let pic = pictures[i];
         pic.item.addEventListener('click', (e) => {
             if (pic.opened) {
                 if (!pic.paired) {
                     // игрок передумал подбирать пару к этой карточке, отмена
-                    pairPic = null
-                    pic.close()
+                    pairPic = null;
+                    pic.close();
                 } else {
                     // если paired, то ниче не делаем
                 }
@@ -162,48 +165,84 @@ let start = (size) => {
                 // открываем карточку
                 if (pairPic === null) {
                     // если это первая карточка в паре
-                    pairPic = pic
-                    pic.open()
-                    clicksMade++
+                    pairPic = pic;
+                    pic.open();
+                    clicksMade++;
                 } else {
                     // если вторая, проверяем на одинаковость картинки
                     if (pairPic.samePicture(pic)) {
                         // ауе, отмечаем карточки как собранные
-                        pic.open()
-                        clicksMade++
-                        pairedCount += 2
-                        pic.paired = true
-                        pairPic.paired = true
+                        pic.open();
+                        clicksMade++;
+                        pairedCount += 2;
+                        pic.paired = true;
+                        pairPic.paired = true;
                     } else {
                         // картинки разные, закрываем карточки
-                        pic.openThenClose()
-                        clicksMade++
-                        let pairPicRef = pairPic
+                        pic.openThenClose();
+                        clicksMade++;
+                        let pairPicRef = pairPic;
                         setTimeout(() => {
-                            pairPicRef.close()
-                        }, 500)
+                            pairPicRef.close();
+                        }, 500);
                     }
-                    pairPic = null
+                    pairPic = null;
                 }
             }
             if (pairedCount === winCount) {
-                alert('Победа')
+                alert('Победа');
             }
-            clicksMadeP.innerHTML = `Сделано открытий: ${clicksMade}`
-        })
+            clicksMadeP.innerHTML = `Сделано открытий: ${clicksMade}`;
+        });
+    }
+}
+
+const clearField = () => {
+    let container = document.querySelector('.container');
+    while (container.firstChild) {
+        container.removeChild(container.lastChild)
     }
 }
 
 document.querySelector('#easy-game-btn').onclick = () => {
+    clearField()
     start(SIZE.small)
 }
 
 document.querySelector('#medium-game-btn').onclick = () => {
+    clearField()
     start(SIZE.medium)
 }
 
 document.querySelector('#hard-game-btn').onclick = () => {
+    clearField()
     start(SIZE.big)
+}
+
+document.querySelector('#unsplash-pics-btn').onclick = () => {
+    pictureLinks = [
+        'https://images.unsplash.com/photo-1607714724990-8f5495b75883?crop=entropy&cs=srgb&fm=jpg&ixid=MXwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHw&ixlib=rb-1.2.1&q=85',
+        'https://images.unsplash.com/photo-1605256108216-7e4a97ac9d93?crop=entropy&cs=srgb&fm=jpg&ixid=MXwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHw&ixlib=rb-1.2.1&q=85',
+        'https://images.unsplash.com/photo-1605894646636-bab3db312b65?crop=entropy&cs=srgb&fm=jpg&ixid=MXwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHw&ixlib=rb-1.2.1&q=85',
+        'https://images.unsplash.com/photo-1605839406808-a6043334fa32?crop=entropy&cs=srgb&fm=jpg&ixid=MXwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHw&ixlib=rb-1.2.1&q=85',
+        'https://images.unsplash.com/photo-1606065258119-27297317b812?crop=entropy&cs=srgb&fm=jpg&ixid=MXwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHw&ixlib=rb-1.2.1&q=85',
+        'https://images.unsplash.com/photo-1607002944680-233705405df0?crop=entropy&cs=srgb&fm=jpg&ixid=MXwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHw&ixlib=rb-1.2.1&q=85',
+    ]
+    clearField()
+    start(currentSize)
+}
+
+document.querySelector('#friends-pics-btn').onclick = () => {
+    pictureLinks = [
+        'res\\200089200354_372636.jpg',
+        'res\\200102200272_283372.jpg',
+        'res\\200108900338_291997.jpg',
+        'res\\200108900793_291690.jpg',
+        'res\\200109000934_288788.jpg',
+        'res\\200158700830_141402.jpg',
+    ]
+    clearField()
+    start(currentSize)
 }
 
 start(SIZE.big);
