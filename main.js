@@ -44,7 +44,9 @@ const blink = (item, color, prevColor, onend) => {
     lightUp(item, color)
     setTimeout(() => {
         lightUp(item, previousBackground);
-        onend()
+        if (onend !== undefined) {
+            onend()
+        }
     }, 200);
 };
 
