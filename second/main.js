@@ -135,6 +135,24 @@ let createField = (picturesArr, size) => {
     return pictures;
 }
 
+const createEnterNameField = (clicksMade) => {
+    let mainColumn = document.querySelector('.main-column')
+    let leaderboardColumn = document.querySelector('.leaderboard-column')
+    let nameInput = document.createElement('input')
+    mainColumn.append(nameInput)
+    let submit = document.createElement('button')
+    submit.className = 'game-btn'
+    submit.innerHTML = 'Добавить'
+    submit.onclick = (e) => {
+        let leaderboardEntry = document.createElement('p')
+        leaderboardEntry.innerHTML = `${nameInput.value}: ${clicksMade}`
+        leaderboardColumn.append(leaderboardEntry)
+        nameInput.remove()
+        submit.remove()
+    }
+    mainColumn.append(submit)
+}
+
 let currentSize = undefined
 
 function start(size) {
@@ -191,6 +209,7 @@ function start(size) {
             }
             if (pairedCount === winCount) {
                 alert('Победа');
+                createEnterNameField(clicksMade)
             }
             clicksMadeP.innerHTML = `Сделано открытий: ${clicksMade}`;
         });
