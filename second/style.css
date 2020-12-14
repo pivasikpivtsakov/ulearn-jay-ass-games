@@ -16,7 +16,9 @@
     background: green;
     transition: transform 0.8s;
     transform-style: preserve-3d;
-    cursor: pointer
+    cursor: pointer;
+    background: url('res/unnamed.png')  no-repeat;
+    background-size: cover;
 }
 
 .show {
