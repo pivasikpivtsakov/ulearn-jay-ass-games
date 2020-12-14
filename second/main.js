@@ -190,7 +190,7 @@ function start(size) {
                 }
             }
             if (pairedCount === winCount) {
-                alert('Победа');
+                setTimeout(() => alert('Победа'), 500)
             }
             clicksMadeP.innerHTML = `Сделано открытий: ${clicksMade}`;
         });
