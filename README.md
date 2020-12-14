@@ -1,4 +1,4 @@
-# ulearn-jay-ass-games
+# ulearn-pure-js-games
 Проект к окончанию курса веб-разработки от ulearn
 
 # че это такое
